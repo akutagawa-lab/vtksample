@@ -16,3 +16,10 @@ x, y, z 方向とも -1 mから 1 mの範囲で計算している．
 
 でスクリプトを実行すると，```structured.vtr``` というファイルが生成される．
 このファイルには ```potential``` にスカラーポテンシャル，```efield``` に電界が格納されている．
+
+```viewstate.pvsm``` はParaviewのViewState ファイルで，
+上記のスクリプトの実行で生成された```structured.vtr``` をParaviewで可視化する例．
+Paraview で [File] -> [Load State...] からこのファイルを指定すると以下のような画面が表示される．
+直後に [Load State Options] のダイアログが表示されるので適切なものを選ぶ．
+
+![screen shot 1](screenshot1.png)
