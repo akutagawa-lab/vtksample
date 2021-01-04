@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+''' EVTK sample script '''
 
 import numpy as np
 import scipy.constants as const
@@ -7,8 +8,8 @@ import pyevtk
 
 
 def main():
-    calc_range = 1.0
-    nsamples = 200
+    calc_range = 1.0   # 計算範囲 -calc_range から calc_range
+    nsamples = 200     # 分割数
     k = 1/(4 * const.pi * const.epsilon_0)
 
     charge = [
@@ -24,6 +25,7 @@ def main():
     yy = np.linspace(calc_range_y[0], calc_range_y[1], nsamples)
     zz = np.linspace(calc_range_z[0], calc_range_z[1], nsamples)
 
+    # 必ず indexing='ij' を指定する．座標軸が入れ替わらないように
     xxx, yyy, zzz = np.meshgrid(xx, yy, zz, indexing='ij')
 
     potential = np.zeros_like(xxx)
@@ -48,14 +50,16 @@ def main():
 
     print(f"{dx.shape}")
 
+    # vtk ファイルの書き出し
     pyevtk.hl.gridToVTK(
-            "./structured",
-            xx, yy, zz,
-            pointData={
+            "./structured",  # ファイル名の指定．拡張子は追加される
+            xx, yy, zz,      # 各座標軸の座標
+            pointData={      # 格子点上のデータの指定
                 'potential': potential,
                 'efield': (E_x, E_y, E_z),
                 },
             )
-    
+
+
 if __name__ == "__main__":
     main()
