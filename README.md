@@ -5,7 +5,7 @@
 ここではPythonを使って作成した3次元数値データをvtkフォーマットのファイルに書き出す例として，
 [pyevtk](https://github.com/paulo-herrera/PyEVTK) を用いた例をあげている．
 
-# twoCharges.py
+## twoCharges.py
 
 (-0.2, 0, 0) の -1 C，(0.2, 0, 0) に 1 Cの電荷を置いたときの電位分布および電界分布を
 x, y, z 方向とも -1 mから 1 mの範囲で計算している．
@@ -23,3 +23,7 @@ Paraview で [File] -> [Load State...] からこのファイルを指定する�
 直後に [Load State Options] のダイアログが表示されるので適切なものを選ぶ．
 
 ![screen shot 1](screenshot1.png)
+
+## オリジナルリポジトリ
+
+オリジナルリポジトリは https://github.com/makutaga/vtksample.git にある．
