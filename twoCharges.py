@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-''' EVTK sample script '''
+"""EVTK sample script
+
+空間に正負の電荷を置いたときの周辺の電位，電界分布を計算し，
+vtkファイルで出力する．
+"""
 
 import numpy as np
 import scipy.constants as const
@@ -7,7 +11,13 @@ import scipy
 import pyevtk
 
 
-def main():
+def main(vtktype='vts'):
+    """ メイン
+
+    Args:
+        vtktype : vtk ファイルの種類を指定する．(vts | vtr)
+    """
+
     calc_range = 1.0   # 計算範囲 -calc_range から calc_range
     nsamples = 200     # 分割数
     k = 1/(4 * const.pi * const.epsilon_0)
@@ -51,15 +61,30 @@ def main():
     print(f"{dx.shape}")
 
     # vtk ファイルの書き出し
-    pyevtk.hl.gridToVTK(
-            "./structured",  # ファイル名の指定．拡張子は追加される
-            xx, yy, zz,      # 各座標軸の座標
-            pointData={      # 格子点上のデータの指定
-                'potential': potential,
-                'efield': (E_x, E_y, E_z),
-                },
-            )
+    filename = './twoCharges'
+    if vtktype == 'vts':
+        ''' StructuredGrid で書き出す場合'''
+        pyevtk.hl.gridToVTK(
+                filename,  # ファイル名の指定．拡張子は追加される
+                xxx, yyy, zzz,      # 各格子点の座標
+                pointData={      # 格子点上のデータの指定
+                    'potential': potential,
+                    'efield': (E_x, E_y, E_z),
+                    },
+                )
+    elif vtktype == 'vtr':
+        ''' RectilinearGrid で書き出す場合'''
+        pyevtk.hl.gridToVTK(
+                filename,  # ファイル名の指定．拡張子は追加される
+                xx, yy, zz,      # 各座標軸の座標
+                pointData={      # 格子点上のデータの指定
+                    'potential': potential,
+                    'efield': (E_x, E_y, E_z),
+                    },
+                )
+    else:
+        print(f"Unsupported vtk fileformat {vtktype}")
 
 
 if __name__ == "__main__":
-    main()
+    main('vts')
